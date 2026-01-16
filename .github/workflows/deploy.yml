@@ -34,6 +34,6 @@ jobs:
           username: ${{ secrets.ECS_USER }}
           key: ${{ secrets.ECS_SSH_KEY }}
           script: |
-            cd /app
+            cd /opt/app
             docker-compose pull
             docker-compose up -d
