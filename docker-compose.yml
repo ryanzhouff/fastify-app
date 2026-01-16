@@ -3,5 +3,5 @@ services:
     image: crpi-z0i66pi33rz7it9j.cn-hangzhou.personal.cr.aliyuncs.com/maplezh/fastify-app:v1
     container_name: fastify-app
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     restart: always

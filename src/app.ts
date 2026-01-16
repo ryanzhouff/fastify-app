@@ -14,9 +14,11 @@ const app = Fastify({
             },
           },
         },
+  trustProxy: true,
 });
 
-app.get('/check', (_, reply) => {
+app.get('/check', (req, reply) => {
+  app.log.info({ ip: req.ip });
   reply.send({ message: 'Hello, fastify app!!!!!!!!!' });
 });
 
