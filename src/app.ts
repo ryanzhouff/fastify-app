@@ -17,7 +17,7 @@ const app = Fastify({
 });
 
 app.get('/check', (_, reply) => {
-  reply.send({ message: 'Hello, fastify app!!!!' });
+  reply.send({ message: 'Hello, fastify app!!!!!!' });
 });
 
 app.listen({ port: 3000, host: '0.0.0.0' }, (err) => {
