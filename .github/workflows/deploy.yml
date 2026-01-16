@@ -1,0 +1,39 @@
+name: Deploy Fastify App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Login to Aliyun ACR
+        uses: docker/login-actions@v3
+        with:
+          registry: crpi-z0i66pi33rz7it9j.cn-hangzhou.personal.cr.aliyuncs.com
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: crpi-z0i66pi33rz7it9j.cn-hangzhou.personal.cr.aliyuncs.com/maplezh/fastify-app:v1
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.ECS_HOST }}
+          username: ${{ secrets.ECS_USER }}
+          key: ${{ secrets.ECS_SSH_KEY }}
+          script: |
+            cd /opt/app
+            docker compose pull
+            docker compose up -d
